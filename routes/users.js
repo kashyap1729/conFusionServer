@@ -9,8 +9,14 @@ router.use(bodyParser.json());
 
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/',authenticate.verifyOrdinaryUser, authenticate.verifyAdmin, (req, res, next) => {
+  User.find({},(err, user)=> {
+      if (err) 
+	  {throw err; }
+	else{
+      res.json(user);
+	}
+    });
 });
 
 
